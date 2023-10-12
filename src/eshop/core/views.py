@@ -1,8 +1,8 @@
 from django.shortcuts import render
 
 # Create your views here.
-def index(request):
+def landing(request):
     return render(request, 'core/index.html')
 
-def eshop(request):
-    return render(request, 'core/eshop.html')
+def imprint(request):
+    return render(request, 'core/imprint.html') 

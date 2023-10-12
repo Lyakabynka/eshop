@@ -14,12 +14,14 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+from django.conf import settings
 from django.contrib import admin
 from django.urls import path
-from core.views import index, eshop
+from django.conf.urls.static import static
+from core.views import landing, imprint
 
 urlpatterns = [
-    path('', index, name='index'),
-    path('eshop', eshop, name='eshop'),
+    path('', landing, name='landing_page'),
+    path('imprint', imprint, name='imprint_page'),
     path('admin/', admin.site.urls),
-]
+] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
