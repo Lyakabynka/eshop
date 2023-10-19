@@ -18,10 +18,11 @@ from django.conf import settings
 from django.contrib import admin
 from django.urls import path
 from django.conf.urls.static import static
-from core.views import landing, imprint
+from core.views import landing, imprint, create_category
 
 urlpatterns = [
     path('', landing, name='landing_page'),
-    path('imprint', imprint, name='imprint_page'),
+    path('imprint/', imprint, name='imprint_page'),
     path('admin/', admin.site.urls),
+    path('create-category/', create_category, name='create-category_page')
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
