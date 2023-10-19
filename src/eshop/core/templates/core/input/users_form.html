@@ -136,18 +136,69 @@
           <img src="logo.png" alt="logo">
         </div>
       </div>
-      <form action="/">
+      <form action="." method="post">
         <div class="title">
           <i class="fas fa-pencil-alt"></i>
           <h2>Register here</h2>
         </div>
         <div class="info">
-          <input class="fname" type="text" name="name" placeholder="First name" required>
-          <input type="text" name="Last Name" placeholder="Last Name" required>
-          <input type="text" name="name" placeholder="Email" required>
-          <input type="text" name="name" placeholder="Phone number" required>
-          <input type="password" name="name" placeholder="Password" maxlength="8" required>
-          <input type="text" name="Address" placeholder="Address" required>
+          {% csrf_token %}
+
+        <div class="mb-3">
+            <label class="inline-block mb-2">Username</label><br>
+            {{ form.username }}
+        </div>
+
+        <div class="mb-3">
+            <label class="inline-block mb-2">Email</label><br>
+            {{ form.email }}
+        </div>
+
+        <div class="mb-3">
+          <label class="inline-block mb-2">First Name</label><br>
+          {{ form.first_name }}
+        </div>
+
+        <div class="mb-3">
+          <label class="inline-block mb-2">Last Name</label><br>
+          {{ form.last_name }}
+        </div>
+
+        <div class="mb-3">
+          <label class="inline-block mb-2">Address</label><br>
+          {{ form.address }}
+        </div>
+
+        <div class="mb-3">
+          <label class="inline-block mb-2">Phone</label><br>
+          {{ form.phone }}
+        </div>
+
+        <div class="mb-3">
+          <label class="inline-block mb-2">Role</label><br>
+          {{ form.role }}
+        </div>
+
+        <div class="mb-3">
+            <label class="inline-block mb-2">Password</label><br>
+            {{ form.password1 }}
+        </div>
+
+        <div class="mb-3">
+            <label class="inline-block mb-2">Repeat password</label><br>
+            {{ form.password2 }}
+        </div>
+
+        {% if form.errors or form.non_field_errors %}
+            <div class="mb-3 p-6 bg-red-100 rounded-xl">
+                {% for field in form %}
+                    {{ field.errors }}
+                {% endfor %}
+
+                {{ form.non_field_errors }}
+            </div>
+        {% endif %}
+
         </div>
         <button type="submit" href="/">Submit</button>
       </form>

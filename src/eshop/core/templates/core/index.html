@@ -63,6 +63,13 @@
                   <li>
                     <a href="#">Customer Service</a>
                   </li>
+                  <li>
+                    <a href="/imprint" style="color: red">Imprint</a>
+                    
+                  </li>
+                  <li>
+                    <a href="/main_form_page" style="color: orangered">Forms</a>
+                  </li>
                 </ul>
               </div>
             </div>
@@ -89,10 +96,12 @@
           <div class="containt_main">
             <div id="mySidenav" class="sidenav">
               <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-              <a href="index.html">Home</a>
-              <a href="fashion.html">Fashion</a>
+              <a href="/">Home</a>
+              {% comment %} <a href="fashion.html">Fashion</a>
               <a href="electronic.html">Electronic</a>
-              <a href="jewellery.html">Jewellery</a>
+              <a href="jewellery.html">Jewellery</a> {% endcomment %}
+              <a href="/imprint" style="color: red">Imprint</a>
+              <a href="/main_form_page">Forms</a>
             </div>
             <span class="toggle_icon" onclick="openNav()"><img src="{% static 'images/toggle-icon.png' %}" /></span>
             <div class="dropdown">

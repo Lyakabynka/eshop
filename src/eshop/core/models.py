@@ -22,6 +22,9 @@ class User(AbstractUser):
     phone = models.CharField(max_length=20)
     # email = models.EmailField()
 
+    def __str__(self) -> str:
+        return self.username
+
 class Category(models.Model):
     name = models.CharField(max_length=255)
     
@@ -52,6 +55,9 @@ class Item(models.Model):
     #
     added_to_cart_by = models.ManyToManyField(User, related_name='cart_items')
     wished_by = models.ManyToManyField(User, related_name='wished_items')
+    
+    def __str__(self) -> str:
+        return self.title
 
 class Discount(models.Model):
     percentage = models.IntegerField(validators=[
@@ -62,6 +68,9 @@ class Discount(models.Model):
     #user can create many discounts
     user = models.ForeignKey(User,related_name='discounts', on_delete=models.CASCADE)
     item = models.OneToOneField(Item, related_name='discount', on_delete=models.CASCADE)
+
+    def __str__(self) -> str:
+        return self.percentage
 
 class Order(models.Model):
 
@@ -77,6 +86,8 @@ class Order(models.Model):
 
     ordered_by = models.ForeignKey(User, related_name='orders', on_delete=models.CASCADE)
 
+    def __str__(self) -> str:
+        return self.price.__str__()
 
 
 class DeliveryData(models.Model):
@@ -92,3 +103,6 @@ class DeliveryData(models.Model):
     order = models.OneToOneField(Order, related_name='delivery_data', on_delete=models.CASCADE)
     #use can have many delivery datas
     user = models.ForeignKey(User, related_name='delivery_datas', on_delete=models.CASCADE)
+
+    def __str__(self) -> str:
+        return self.address

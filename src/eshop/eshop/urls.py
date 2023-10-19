@@ -18,11 +18,23 @@ from django.conf import settings
 from django.contrib import admin
 from django.urls import path
 from django.conf.urls.static import static
-from core.views import landing, imprint, create_category
+from core.views import create_user_item,create_delivery_data,create_order,create_discount,create_item,signup,landing, imprint,forms_main ,create_category, create_role
 
 urlpatterns = [
     path('', landing, name='landing_page'),
     path('imprint/', imprint, name='imprint_page'),
     path('admin/', admin.site.urls),
-    path('create-category/', create_category, name='create-category_page')
+    path('main_form_page/', forms_main, name='forms-main'),
+    path('category_form/', create_category, name='create-category_page'),
+    path('roles_form/', create_role, name='create-role_page'),
+    path('users_form/', signup, name='signup_page'),
+    path('items_form/', create_item, name='create-item_page'),
+    path('discount_form/', create_discount, name='create-discount_page'),
+    path('orders_form/', create_order, name='create-order_page'),
+    path('delivery_data_form/', create_delivery_data, name='create-delivery-data_page'),
+    path('user_item_form/', create_user_item, name='create-user-item_page'),
+    
+
+
+
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
