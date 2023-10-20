@@ -2,6 +2,8 @@ from django.shortcuts import render, redirect
 from .forms import NewCategoryForm, NewRoleForm, NewOrderForm
 from .forms import NewUserItemForm,SignupForm, NewItemForm,NewDiscountForm, NewDeliveryDataForm
 from .models import User
+from .forms import NewWishedItemUserForm,NewOwnedItemUserForm,NewOrderUserForm, NewOrderItemForm
+
 # Create your views here.
 def landing(request):
     return render(request, 'core/index.html')
@@ -20,7 +22,7 @@ def create_category(request):
             category = form.save(commit=False)
             category.save()
 
-            return redirect('/')
+            return redirect('/successful_operation')
     
     else:
         form = NewCategoryForm()
@@ -37,7 +39,7 @@ def create_role(request):
             role = form.save(commit=False)
             role.save()
 
-            return redirect('/')
+            return redirect('/successful_operation')
     
     else:
         form = NewRoleForm()
@@ -54,7 +56,7 @@ def signup(request):
             user = form.save(commit=False)
             user.save()
 
-            return redirect('/login/')
+            return redirect('/successful_operation')
     else:
         form = SignupForm()
 
@@ -70,7 +72,7 @@ def create_item(request):
             item = form.save()
             item.save()
 
-            return redirect('/')
+            return redirect('/successful_operation')
     else:
         form = NewItemForm()
 
@@ -86,7 +88,7 @@ def create_discount(request):
             discount = form.save()
             discount.save()
 
-            return redirect('/')
+            return redirect('/successful_operation')
     else:
         form = NewDiscountForm()
 
@@ -102,7 +104,7 @@ def create_order(request):
             order = form.save()
             order.save()
 
-            return redirect('/')
+            return redirect('/successful_operation')
     else:
         form = NewOrderForm()
 
@@ -118,7 +120,7 @@ def create_delivery_data(request):
             delivery_data = form.save()
             delivery_data.save()
 
-            return redirect('/')
+            return redirect('/successful_operation')
     else:
         form = NewDeliveryDataForm()
 
@@ -136,7 +138,7 @@ def create_user_item(request):
             
             user.cart_items.add(item)
 
-            return redirect('/')
+            return redirect('/successful_operation')
     else:
         form = NewUserItemForm()
     
@@ -144,4 +146,77 @@ def create_user_item(request):
         'form': form
     })
 
-# TODO: finish ( i stopped on ordered_form )
+def create_user_order(request):
+    if request.method == 'POST':
+        form = NewOrderUserForm(request.POST)
+
+        if form.is_valid():
+            user = form.cleaned_data['users']
+            order = form.cleaned_data['orders']
+            
+            user.orders.add(order)
+
+            return redirect('/successful_operation')
+    else:
+        form = NewOrderUserForm()
+    
+    return render(request, 'core/input/ordered_form.html', {
+        'form': form
+    })
+
+def create_order_item(request):
+    if request.method == 'POST':
+        form = NewOrderItemForm(request.POST)
+
+        if form.is_valid():
+            item = form.cleaned_data['items']
+            order = form.cleaned_data['orders']
+            
+            order.items.add(item)
+
+            return redirect('/successful_operation')
+    else:
+        form = NewOrderItemForm()
+    
+    return render(request, 'core/input/ordered_items_form.html', {
+        'form': form
+    })
+
+def create_owneditem_user(request):
+    if request.method == 'POST':
+        form = NewOwnedItemUserForm(request.POST)
+
+        if form.is_valid():
+            item = form.cleaned_data['items']
+            users = form.cleaned_data['users']
+            
+            users.items.add(item)
+
+            return redirect('/successful_operation')
+    else:
+        form = NewOwnedItemUserForm()
+    
+    return render(request, 'core/input/owns_form.html', {
+        'form': form
+    })
+
+def create_wisheditem_user(request):
+    if request.method == 'POST':
+        form = NewWishedItemUserForm(request.POST)
+
+        if form.is_valid():
+            item = form.cleaned_data['items']
+            users = form.cleaned_data['users']
+            
+            users.wished_items.add(item)
+
+            return redirect('/successful_operation')
+    else:
+        form = NewWishedItemUserForm()
+    
+    return render(request, 'core/input/wished_user_items_form.html', {
+        'form': form
+    })
+
+def successful_operation(request):
+    return render(request, 'core/input/success.html')

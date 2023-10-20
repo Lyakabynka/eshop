@@ -86,6 +86,8 @@ class Order(models.Model):
 
     ordered_by = models.ForeignKey(User, related_name='orders', on_delete=models.CASCADE)
 
+    items = models.ManyToManyField(Item, related_name='orders')
+
     def __str__(self) -> str:
         return self.price.__str__()
 

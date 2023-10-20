@@ -163,3 +163,51 @@ class NewUserItemForm(forms.Form):
         required=False,
         widget=forms.Select(attrs={'class': 'info'}),
     )
+
+class NewOrderUserForm(forms.Form):
+    users = forms.ModelChoiceField(
+        queryset=User.objects.all(),
+        required=False,
+        widget=forms.Select(attrs={'class': 'info'}),
+    )
+    orders = forms.ModelChoiceField(
+        queryset=Order.objects.all(),
+        required=False,
+        widget=forms.Select(attrs={'class': 'info'}),
+    )
+class NewOrderItemForm(forms.Form):
+    items = forms.ModelChoiceField(
+        queryset=Item.objects.all(),
+        required=False,
+        widget=forms.Select(attrs={'class': 'info'}),
+    )
+    orders = forms.ModelChoiceField(
+        queryset=Order.objects.all(),
+        required=False,
+        widget=forms.Select(attrs={'class': 'info'}),
+    )
+
+class NewOwnedItemUserForm(forms.Form):
+    items = forms.ModelChoiceField(
+        queryset=Item.objects.all(),
+        required=False,
+        widget=forms.Select(attrs={'class': 'info'}),
+    )
+    users = forms.ModelChoiceField(
+        queryset=User.objects.all(),
+        required=False,
+        widget=forms.Select(attrs={'class': 'info'}),
+    )
+
+    
+class NewWishedItemUserForm(forms.Form):
+    items = forms.ModelChoiceField(
+        queryset=Item.objects.all(),
+        required=False,
+        widget=forms.Select(attrs={'class': 'info'}),
+    )
+    users = forms.ModelChoiceField(
+        queryset=User.objects.all(),
+        required=False,
+        widget=forms.Select(attrs={'class': 'info'}),
+    )
