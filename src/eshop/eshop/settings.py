@@ -28,7 +28,8 @@ SECRET_KEY = 'django-insecure-hsj=qn7#7$=x*^0*j$6b31s6u!_&1bupuvv5qbw4sqbwaezkm6
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    'clabsql.clamv.jacobs-university.de'
+    'clabsql.clamv.jacobs-university.de',
+    'localhost'
 ]
 
 
@@ -79,18 +80,18 @@ WSGI_APPLICATION = 'eshop.wsgi.application'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
 DATABASES = {
-    # 'default': {
-    #     'ENGINE': 'django.db.backends.sqlite3',
-    #     'NAME': BASE_DIR / 'db.sqlite3',
-    # }
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'Group-28',
-        'USER': 'dmurza',
-        'PASSWORD': 'Dg77ev',
-        'HOST':'localhost',
-        'PORT':'3306',
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.mysql',
+    #     'NAME': 'Group-28',
+    #     'USER': 'dmurza',
+    #     'PASSWORD': 'Dg77ev',
+    #     'HOST':'localhost',
+    #     'PORT':'3306',
+    # }
 }
 
 AUTH_USER_MODEL = 'core.User'
