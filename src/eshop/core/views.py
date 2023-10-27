@@ -1,7 +1,8 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, get_object_or_404, redirect
 from .forms import NewCategoryForm, NewRoleForm, NewOrderForm
 from .forms import NewUserItemForm,SignupForm, NewItemForm,NewDiscountForm, NewDeliveryDataForm
-from .models import User
+from .models import User, Item, Category, Role
+from django.db.models import Q
 from .forms import NewWishedItemUserForm,NewOwnedItemUserForm,NewOrderUserForm, NewOrderItemForm
 
 # Create your views here.
@@ -220,3 +221,58 @@ def create_wisheditem_user(request):
 
 def successful_operation(request):
     return render(request, 'core/input/success.html')
+
+def search_items(request):
+    query = request.GET.get('query', '')
+    category_id = request.GET.get('category', 0)
+    categories = Category.objects.all()
+    items = Item.objects.all()
+
+    if category_id:
+        items = items.filter(category_id=category_id)
+
+    if query:
+        items = items.filter(Q(title__icontains=query) | Q(description__icontains=query))
+
+    return render(request, 'core/search/search_items.html', {
+        'items': items,
+        'query': query,
+        'categories': categories,
+        'category_id': int(category_id)
+    })
+
+def item_detail(request, pk):
+    item = get_object_or_404(Item, pk=pk)
+
+    return render(request, 'core/search/item_detail.html', {
+        'item': item,
+    })
+
+def search_users(request):
+    query = request.GET.get('query', '')
+    role_id = request.GET.get('role', 0)
+    roles = Role.objects.all()
+    users = User.objects.all()
+    
+    if role_id:
+        users = users.filter(role_id=role_id)
+
+    if query:
+        users = users.filter(Q(username__icontains=query) | Q(address__icontains=query))
+
+    user_order_counts = [{'user': user, 'order_count': user.orders.count()} for user in users]
+
+    return render(request, 'core/search/search_users.html', {
+        'user_order_counts': user_order_counts,
+        'query': query,
+        'roles': roles,
+        'role_id': int(role_id)
+    })
+
+
+def user_detail(request, pk):
+    user = get_object_or_404(User, pk=pk)
+
+    return render(request, 'core/search/user_detail.html', {
+        'user': user,
+    })
