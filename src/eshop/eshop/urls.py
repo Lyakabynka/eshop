@@ -18,7 +18,7 @@ from django.conf import settings
 from django.contrib import admin
 from django.urls import path
 from django.conf.urls.static import static
-from core.views import user_wished_items_detail,search_wisheditems,user_detail,search_users,item_detail,search_items,successful_operation,create_wisheditem_user,create_owneditem_user,create_order_item,create_user_order,create_user_item,create_delivery_data,create_order,create_discount,create_item,signup,landing, imprint,forms_main ,create_category, create_role
+from core.views import search_orders, order_detail,user_wished_items_detail,search_wisheditems,user_detail,search_users,item_detail,search_items,successful_operation,create_wisheditem_user,create_owneditem_user,create_order_item,create_user_order,create_user_item,create_delivery_data,create_order,create_discount,create_item,signup,landing, imprint,forms_main ,create_category, create_role
 
 urlpatterns = [
     path('', landing, name='landing_page'),
@@ -44,4 +44,6 @@ urlpatterns = [
     path('users/<int:pk>/', user_detail, name='user-detail_page'),
     path('user_wished_items/', search_wisheditems, name='search-user-wished-items_page'),
     path('user_wished_items/<int:pk>/', user_wished_items_detail, name='user-wished-items-detail_page'),
+    path('orders/', search_orders, name='search-orders_page'),
+    path('orders/<int:pk>/', order_detail, name='order-detail_page')
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from .forms import NewCategoryForm, NewRoleForm, NewOrderForm
 from .forms import NewUserItemForm,SignupForm, NewItemForm,NewDiscountForm, NewDeliveryDataForm
-from .models import Order, User, Item, Category, Role
+from .models import DeliveryData,Order, User, Item, Category, Role
 from django.db.models import Q
 from .forms import NewWishedItemUserForm,NewOwnedItemUserForm,NewOrderUserForm, NewOrderItemForm
 
@@ -310,9 +310,8 @@ def user_wished_items_detail(request, pk):
 
 
 def search_orders(request):
-    query = request.GET.get('query', '')
-    price = request.GET.get('price')
-    delivery_type = request.GET.get('delivery_type')
+    price = request.GET.get('price', 0)
+    delivery_type = request.GET.get('delivery_type', '')
     
     orders = Order.objects.all()
 
@@ -320,7 +319,8 @@ def search_orders(request):
         orders = orders.filter(price=price)
 
     if delivery_type:
-        orders = orders.filter(delivery_type=delivery_type)
+        delivery_datas = DeliveryData.objects.filter(type=delivery_type)
+        orders = [delivery_data.order for delivery_data in delivery_datas]
 
     return render(request, 'core/search/search_orders.html', {
         'orders': orders,
@@ -333,4 +333,5 @@ def order_detail(request, pk):
 
     return render(request, 'core/search/order_detail.html', {
         'order': order,
+        'items_count': order.items.count(),
     })
