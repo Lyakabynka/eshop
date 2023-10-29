@@ -310,7 +310,7 @@ def user_wished_items_detail(request, pk):
 
 
 def search_orders(request):
-    price = request.GET.get('price', 0)
+    price = request.GET.get('price', '')
     delivery_type = request.GET.get('delivery_type', '')
     
     orders = Order.objects.all()

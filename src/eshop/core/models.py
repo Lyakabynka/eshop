@@ -89,7 +89,7 @@ class Order(models.Model):
     items = models.ManyToManyField(Item, related_name='orders')
 
     def __str__(self) -> str:
-        return self.price.__str__()
+        return self.id.__str__()
 
 
 class DeliveryData(models.Model):
