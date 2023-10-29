@@ -319,7 +319,7 @@ def search_orders(request):
         orders = orders.filter(price=price)
 
     if delivery_type:
-        orders = orders.filter(deliverydata__type=delivery_type)
+        orders = orders.filter(delivery_data__type=delivery_type)
 
     return render(request, 'core/search/search_orders.html', {
         'orders': orders,
