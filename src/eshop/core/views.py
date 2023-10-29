@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from .forms import NewCategoryForm, NewRoleForm, NewOrderForm
 from .forms import NewUserItemForm,SignupForm, NewItemForm,NewDiscountForm, NewDeliveryDataForm
-from .models import User, Item, Category, Role
+from .models import Order, User, Item, Category, Role
 from django.db.models import Q
 from .forms import NewWishedItemUserForm,NewOwnedItemUserForm,NewOrderUserForm, NewOrderItemForm
 
@@ -275,4 +275,62 @@ def user_detail(request, pk):
 
     return render(request, 'core/search/user_detail.html', {
         'user': user,
+    })
+
+def search_wisheditems(request):
+    wished_items = []
+    users = User.objects.all()
+    query = request.GET.get('query', '')
+    user_id = request.GET.get('user', 0)
+
+    if query:
+        users = User.objects.filter(Q(username__icontains=query) | Q(address__icontains=query))
+
+    if user_id:
+        wished_items = users.filter(user_id=user_id).first().wished_items
+
+    user_wished_items_counts = [{'user': user, 'wished_items_count': user.wished_items.count()} for user in users]
+
+    return render(request, 'core/search/search_user_wished_items.html', {
+        'user_wished_items_counts': user_wished_items_counts,
+        'users': users,
+        'user_id': int(user_id),
+        'query': query,
+    })
+
+def user_wished_items_detail(request, pk):
+    user = get_object_or_404(User, pk=pk)
+
+    user_wished_items = user.wished_items.all()
+
+    return render(request, 'core/search/user_wished_items_detail.html', {
+        'username': user.username,
+        'user_wished_items': user_wished_items,
+    })
+
+
+def search_orders(request):
+    query = request.GET.get('query', '')
+    price = request.GET.get('price')
+    delivery_type = request.GET.get('delivery_type')
+    
+    orders = Order.objects.all()
+
+    if price:
+        orders = orders.filter(price=price)
+
+    if delivery_type:
+        orders = orders.filter(delivery_type=delivery_type)
+
+    return render(request, 'core/search/search_orders.html', {
+        'orders': orders,
+        'price': price,
+        'delivery_type': delivery_type,
+    })
+
+def order_detail(request, pk):
+    order = get_object_or_404(Order, pk=pk)
+
+    return render(request, 'core/search/order_detail.html', {
+        'order': order,
     })
