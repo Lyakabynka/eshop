@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Order Search</title>
+</head>
+<body>
+    <div class="pb-6 grid grid-cols-4 gap-4 bg-gray-100">
+        <div class="col-span-1">
+            <form method="get" action="/orders">
+                <input name="price" class="w-full py-4 px-6 border rounded-xl" type="number" value="{{ price }}" placeholder="Enter price">
+
+                <label for="delivery_type">Delivery Type:</label>
+                <select name="delivery_type" class="w-full py-4 px-6 border rounded-xl">
+                    <option value="" selected>Any</option>
+                    <option value="Ordinary">Ordinary</option>
+                    <option value="Express">Express</option>
+                </select>
+
+                <button class="mt-2 py-4 px-8 text-lg bg-teal-500 text-white rounded-xl">Search</button>
+            </form>
+
+            <hr class="my-6">
+
+            <p class="font-semibold">Clear filters</p>
+
+            <ul>
+                <li><a href="/orders" class="mt-2 py-4 px-8 inline-block bg-yellow-500 text-lg rounded-xl text-white">Clear</a>
+        </div>
+
+        <div class="col-span-3">
+            <div class="grid grid-cols-3 gap-3">
+                {% for order in orders %}
+                    <div>
+                        <a href="/orders/{{ order.id }}">
+                            <div class="p-6 bg-white rounded-b-xl">
+                                <h2 class="text-2xl">{{ order.product_name }}</h2>
+                                <p class="text-gray-500">Order: {{ order }}</p>
+                                <p class="text-gray-500">Order price: {{ order.price }}</p>
+                                <p class="text-gray-500">Delivery Type: {{ order.delivery_data.type }}</p>
+                            </div>
+                        </a>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</body>
+</html>

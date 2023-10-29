@@ -1,0 +1,3 @@
+http://clabsql.clamv.jacobs-university.de:8989/ 
+- link ( if it is not up, tell me please before you assess or run './run_server.sh' in the root directory )
+- ACCESS VIA HTTP, NOT HTTPS, BECAUSE THERE IS NO POINT FOR US TO MAKE SSL CERTIFICATE
