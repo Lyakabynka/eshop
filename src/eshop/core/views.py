@@ -19,6 +19,9 @@ def forms_main(request):
     return render(request, 'core/input/main_form_page.html')
 
 def create_category(request):
+    if request.user.is_authenticated == False:
+        return redirect('/')
+
     if request.method == 'POST':
         form = NewCategoryForm(request.POST, request.FILES)
 
@@ -36,6 +39,9 @@ def create_category(request):
     })
 
 def create_role(request):
+    if request.user.is_authenticated == False:
+        return redirect('/')
+
     if request.method == 'POST':
         form = NewRoleForm(request.POST, request.FILES)
 
@@ -53,6 +59,9 @@ def create_role(request):
     })
 
 def create_item(request):
+    if request.user.is_authenticated == False:
+        return redirect('/')
+
     if request.method == 'POST':
         form = NewItemForm(request.POST)
 
@@ -69,6 +78,9 @@ def create_item(request):
     })
 
 def create_discount(request):
+    if request.user.is_authenticated == False:
+        return redirect('/')
+
     if request.method == 'POST':
         form = NewDiscountForm(request.POST)
 
@@ -85,6 +97,9 @@ def create_discount(request):
     })
 
 def create_order(request):
+    if request.user.is_authenticated == False:
+        return redirect('/')
+
     if request.method == 'POST':
         form = NewOrderForm(request.POST)
 
@@ -101,6 +116,9 @@ def create_order(request):
     })
 
 def create_delivery_data(request):
+    if request.user.is_authenticated == False:
+        return redirect('/')
+
     if request.method == 'POST':
         form = NewDeliveryDataForm(request.POST)
 
@@ -117,6 +135,9 @@ def create_delivery_data(request):
     })
 
 def create_user_item(request):
+    if request.user.is_authenticated == False:
+        return redirect('/')
+
     if request.method == 'POST':
         form = NewUserItemForm(request.POST)
 
@@ -135,6 +156,9 @@ def create_user_item(request):
     })
 
 def create_user_order(request):
+    if request.user.is_authenticated == False:
+        return redirect('/')
+
     if request.method == 'POST':
         form = NewOrderUserForm(request.POST)
 
@@ -153,6 +177,9 @@ def create_user_order(request):
     })
 
 def create_order_item(request):
+    if request.user.is_authenticated == False:
+        return redirect('/')
+
     if request.method == 'POST':
         form = NewOrderItemForm(request.POST)
 
@@ -171,6 +198,9 @@ def create_order_item(request):
     })
 
 def create_owneditem_user(request):
+    if request.user.is_authenticated == False:
+        return redirect('/')
+
     if request.method == 'POST':
         form = NewOwnedItemUserForm(request.POST)
 
@@ -189,6 +219,9 @@ def create_owneditem_user(request):
     })
 
 def create_wisheditem_user(request):
+    if request.user.is_authenticated == False:
+        return redirect('/')
+
     if request.method == 'POST':
         form = NewWishedItemUserForm(request.POST)
 
@@ -208,6 +241,8 @@ def create_wisheditem_user(request):
 
 def successful_operation(request):
     return render(request, 'core/input/success.html')
+
+
 
 def search_items(request):
     query = request.GET.get('query', '')
@@ -235,6 +270,7 @@ def item_detail(request, pk):
         'item': item,
     })
 
+
 def search_users(request):
     query = request.GET.get('query', '')
     role_id = request.GET.get('role', 0)
@@ -256,13 +292,13 @@ def search_users(request):
         'role_id': int(role_id)
     })
 
-
 def user_detail(request, pk):
     user = get_object_or_404(User, pk=pk)
 
     return render(request, 'core/search/user_detail.html', {
         'user': user,
     })
+
 
 def search_wisheditems(request):
     wished_items = []
@@ -321,6 +357,7 @@ def order_detail(request, pk):
         'order': order,
         'items_count': order.items.count(),
     })
+
 
 def signup(request):
     if request.method == 'POST':
