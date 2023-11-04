@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Wished items by {{ username }}</title>
+  </head>
+  <body>
+
+    <div class="pb-6 grid grid-cols-4 gap-4 bg-gray-100">
+        Wished items by {{username}}
+    </div>
+
+    <div class="grid grid-cols-5 gap-6">
+      {% for user_wished_item in user_wished_items %}
+
+        <div class="col-span-2 p-6 bg-gray-100 rounded-xl">
+          <h1 class="mb-6 text-3xl">{{ user_wished_item.title }}</h1>
+          <p class="text-gray-500">
+            <strong>Price:</strong>{{ user_wished_item.price }}
+          </p>
+          <p class="text-gray-500">
+            <strong>Seller:</strong>{{ user_wished_item.owner.username }}
+          </p>
+
+          {% if user_wished_item.description %}
+            <p class="text-gray-700">
+              <strong class="text-gray-500">Description:</strong><br />
+              {{ user_wished_item.description }}
+            </p>
+          {% endif %}
+        </div>
+
+      {% endfor %}
+    </div>
+  </body>
+</html>
