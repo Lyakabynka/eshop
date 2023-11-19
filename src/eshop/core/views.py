@@ -4,6 +4,7 @@ from .forms import NewUserItemForm,SignupForm, NewItemForm,NewDiscountForm, NewD
 from .models import DeliveryData,Order, User, Item, Category, Role
 from django.db.models import Q
 from .forms import NewWishedItemUserForm,NewOwnedItemUserForm,NewOrderUserForm, NewOrderItemForm
+from eshop.middleware.stats_middleware import StatsMiddleware
 
 # Create your views here.
 def landing(request):
@@ -30,7 +31,8 @@ def create_category(request):
             category.save()
 
             return redirect('/successful_operation')
-    
+        else:
+            StatsMiddleware.log_error(request, form.errors.as_text())
     else:
         form = NewCategoryForm()
 
@@ -50,7 +52,8 @@ def create_role(request):
             role.save()
 
             return redirect('/successful_operation')
-    
+        else:
+            StatsMiddleware.log_error(request, form.errors.as_text())
     else:
         form = NewRoleForm()
 
@@ -70,6 +73,8 @@ def create_item(request):
             item.save()
 
             return redirect('/successful_operation')
+        else:
+            StatsMiddleware.log_error(request, form.errors.as_text())
     else:
         form = NewItemForm()
 
@@ -89,6 +94,8 @@ def create_discount(request):
             discount.save()
 
             return redirect('/successful_operation')
+        else:
+            StatsMiddleware.log_error(request, form.errors.as_text())
     else:
         form = NewDiscountForm()
 
@@ -108,6 +115,8 @@ def create_order(request):
             order.save()
 
             return redirect('/successful_operation')
+        else:
+            StatsMiddleware.log_error(request, form.errors.as_text())
     else:
         form = NewOrderForm()
 
@@ -127,6 +136,8 @@ def create_delivery_data(request):
             delivery_data.save()
 
             return redirect('/successful_operation')
+        else:
+            StatsMiddleware.log_error(request, form.errors.as_text())
     else:
         form = NewDeliveryDataForm()
 
@@ -148,6 +159,8 @@ def create_user_item(request):
             user.cart_items.add(item)
 
             return redirect('/successful_operation')
+        else:
+            StatsMiddleware.log_error(request, form.errors.as_text())
     else:
         form = NewUserItemForm()
     
@@ -169,6 +182,8 @@ def create_user_order(request):
             user.orders.add(order)
 
             return redirect('/successful_operation')
+        else:
+            StatsMiddleware.log_error(request, form.errors.as_text())
     else:
         form = NewOrderUserForm()
     
@@ -190,6 +205,8 @@ def create_order_item(request):
             order.items.add(item)
 
             return redirect('/successful_operation')
+        else:
+            StatsMiddleware.log_error(request, form.errors.as_text())
     else:
         form = NewOrderItemForm()
     
@@ -211,6 +228,8 @@ def create_owneditem_user(request):
             users.items.add(item)
 
             return redirect('/successful_operation')
+        else:
+            StatsMiddleware.log_error(request, form.errors.as_text())
     else:
         form = NewOwnedItemUserForm()
     
@@ -232,6 +251,8 @@ def create_wisheditem_user(request):
             users.wished_items.add(item)
 
             return redirect('/successful_operation')
+        else:
+            StatsMiddleware.log_error(request, form.errors.as_text())
     else:
         form = NewWishedItemUserForm()
     
@@ -368,6 +389,8 @@ def signup(request):
             user.save()
 
             return redirect('/successful_operation')
+        else:
+            StatsMiddleware.log_error(request, form.errors.as_text())
     else:
         form = SignupForm()
 

@@ -1,0 +1,16 @@
+website url:
+
+http://clabsql.clamv.jacobs-university.de:8989/
+
+HTTP! not https. Connect through wifi only
+
+
+ASSIGNMENT 8:
+    - relative path to the logs: src/eshop/eshop/middleware/stats ( then just open .csv files )
+
+
+----------------------------------------------------
+
+credentials for login ( for you to check if everything works ):
+    username: admin
+    password: admin
