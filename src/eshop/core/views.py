@@ -5,6 +5,8 @@ from .models import DeliveryData,Order, User, Item, Category, Role
 from django.db.models import Q
 from .forms import NewWishedItemUserForm,NewOwnedItemUserForm,NewOrderUserForm, NewOrderItemForm
 from eshop.middleware.stats_middleware import StatsMiddleware
+from django.http import JsonResponse
+import logging
 
 # Create your views here.
 def landing(request):
@@ -360,7 +362,7 @@ def search_orders(request):
     orders = Order.objects.all()
 
     if price:
-        orders = orders.filter(price=price)
+        orders = orders.filter(price = price)
 
     if delivery_type:
         orders = orders.filter(delivery_data__type=delivery_type)
@@ -397,3 +399,24 @@ def signup(request):
     return render(request, 'core/input/users_form.html', {
         'form': form
     })
+
+logger = logging.getLogger(__name__)
+
+def autocomplete_users(request):
+    query = request.GET.get('term', '')
+    users = User.objects.filter(username__icontains=query).values_list('username', flat=True)
+    usernames = list(users)
+    return JsonResponse(usernames, safe=False)
+
+def autocomplete_orders(request):
+    query = request.GET.get('term', '')
+    orders = Order.objects.filter(price__icontains=str(query)).values_list('price', flat=True)
+    prices = list(orders)
+    autocomplete_data = [{'value': str(price)} for price in prices]
+    return JsonResponse(autocomplete_data, safe=False)
+
+def autocomplete_items(request):
+    query = request.GET.get('term', '')
+    items = Item.objects.filter(title__icontains=query).values_list('title', flat=True)
+    titles = list(items)
+    return JsonResponse(titles, safe=False)

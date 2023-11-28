@@ -18,7 +18,7 @@ from django.conf import settings
 from django.contrib import admin
 from django.urls import path
 from django.conf.urls.static import static
-from core.views import search_orders, order_detail,user_wished_items_detail,search_wisheditems,user_detail,search_users,item_detail,search_items,successful_operation,create_wisheditem_user,create_owneditem_user,create_order_item,create_user_order,create_user_item,create_delivery_data,create_order,create_discount,create_item,signup,landing, imprint,forms_main ,create_category, create_role
+from core.views import *
 from django.contrib.auth import views as auth_views
 from core.forms import LoginForm
 
@@ -50,4 +50,9 @@ urlpatterns = [
     path('users_form/', signup, name='signup_page'),
     path('login/', auth_views.LoginView.as_view(template_name='core/login.html',authentication_form=LoginForm), name='login_page'),
     path('logout/', auth_views.LogoutView.as_view(), name='logout_page'),
+    # autocomplete
+    path('autocomplete_users/', autocomplete_users, name='autocomplete_users'),
+    path('autocomplete_orders/', autocomplete_orders, name='autocomplete_orders'),
+    path('autocomplete_items/', autocomplete_items, name='autocomplete_items'),
+    
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
