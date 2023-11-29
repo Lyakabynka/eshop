@@ -404,19 +404,19 @@ logger = logging.getLogger(__name__)
 
 def autocomplete_users(request):
     query = request.GET.get('term', '')
-    users = User.objects.filter(username__icontains=query).values_list('username', flat=True)
+    users = User.objects.filter(username__startswith=query).values_list('username', flat=True)
     usernames = list(users)
     return JsonResponse(usernames, safe=False)
 
 def autocomplete_orders(request):
     query = request.GET.get('term', '')
-    orders = Order.objects.filter(price__icontains=str(query)).values_list('price', flat=True)
+    orders = Order.objects.filter(price__startswith=str(query)).values_list('price', flat=True)
     prices = list(orders)
     autocomplete_data = [{'value': str(price)} for price in prices]
     return JsonResponse(autocomplete_data, safe=False)
 
 def autocomplete_items(request):
     query = request.GET.get('term', '')
-    items = Item.objects.filter(title__icontains=query).values_list('title', flat=True)
+    items = Item.objects.filter(title__startswith=query).values_list('title', flat=True)
     titles = list(items)
     return JsonResponse(titles, safe=False)
