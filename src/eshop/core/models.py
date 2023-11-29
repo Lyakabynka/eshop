@@ -69,7 +69,7 @@ class Discount(models.Model):
     item = models.OneToOneField(Item, related_name='discount', on_delete=models.CASCADE)
 
     def __str__(self) -> str:
-        return self.percentage
+        return self.percentage.__str__()
 
 class Order(models.Model):
 
