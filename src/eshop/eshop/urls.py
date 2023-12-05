@@ -54,5 +54,5 @@ urlpatterns = [
     path('autocomplete_users/', autocomplete_users, name='autocomplete_users'),
     path('autocomplete_orders/', autocomplete_orders, name='autocomplete_orders'),
     path('autocomplete_items/', autocomplete_items, name='autocomplete_items'),
-    
+    path('map/', map, name='map_page'),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

@@ -7,6 +7,7 @@ from .forms import NewWishedItemUserForm,NewOwnedItemUserForm,NewOrderUserForm, 
 from eshop.middleware.stats_middleware import StatsMiddleware
 from django.http import JsonResponse
 import logging
+from requests import *
 
 # Create your views here.
 def landing(request):
@@ -420,3 +421,20 @@ def autocomplete_items(request):
     items = Item.objects.filter(title__startswith=query).values_list('title', flat=True)
     titles = list(items)
     return JsonResponse(titles, safe=False)
+
+logger = logging.getLogger(__name__)
+
+def map(request):
+    client_ip = request.META.get('REMOTE_ADDR')
+    ip_info = get(f"https://ipinfo.io/{client_ip}?token=55664942313b79").json()
+    coordinates = ip_info.get('loc', '').split(',')
+    latitude = float(coordinates[0])
+    longitude = float(coordinates[1])
+    
+    context = {
+        'latitude': latitude,
+        'longitude': longitude,
+        'ip_address': client_ip,
+    }
+
+    return render(request, 'core/map/map.html', context)
