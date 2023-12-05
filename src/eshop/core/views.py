@@ -427,9 +427,18 @@ logger = logging.getLogger(__name__)
 def map(request):
     client_ip = request.META.get('REMOTE_ADDR')
     ip_info = get(f"https://ipinfo.io/{client_ip}?token=55664942313b79").json()
+
+    if ip_info.get('bogon'): # if ip is local
+        client_ip = get('https://api.ipify.org').text
+        ip_info = get(f"https://ipinfo.io/{client_ip}?token=55664942313b79").json()
+
     coordinates = ip_info.get('loc', '').split(',')
-    latitude = float(coordinates[0])
-    longitude = float(coordinates[1])
+
+    try:
+        latitude = float(coordinates[0])
+        longitude = float(coordinates[1])
+    except:
+        return redirect('/')
     
     context = {
         'latitude': latitude,
